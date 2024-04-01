@@ -9,6 +9,13 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+#[tauri::command]
+fn create_directory(path: String) -> Result<(), String> {
+  std::fs::create_dir_all(path)
+    .map_err(|e| e.to_string())
+}
+
+
 fn main() {
     tauri::Builder::default()
         // ↓ここから
@@ -19,7 +26,7 @@ fn main() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![greet, create_directory])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
