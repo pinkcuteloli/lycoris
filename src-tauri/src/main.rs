@@ -18,15 +18,14 @@ fn create_directory(path: String) -> Result<(), String> {
 
 fn main() {
     tauri::Builder::default()
-        // ↓ここから
         .setup(|app| {
-            // 開発時だけdevtoolsを表示する。
             #[cfg(debug_assertions)]
             app.get_window("main").unwrap().open_devtools();
 
             Ok(())
         })
         .invoke_handler(tauri::generate_handler![greet, create_directory])
+        .plugin(tauri_plugin_store::Builder::default().build())
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

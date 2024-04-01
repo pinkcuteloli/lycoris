@@ -6,6 +6,9 @@ import { dialog } from "@tauri-apps/api";
 import { listen } from "@tauri-apps/api/event";
 import { invoke } from "@tauri-apps/api/tauri";
 import { useState } from "react";
+import { Store } from "tauri-plugin-store-api";
+
+const store = new Store(".settings.json");
 
 export default function Onboarding() {
   const [dir, setDir] = useState<string>("");
@@ -23,6 +26,9 @@ export default function Onboarding() {
 
       if (selectedPath) {
         await invoke("create_directory", { path: selectedPath });
+
+        await store.set("path", selectedPath);
+        await store.save();
       }
     } catch (error) {
       console.error("フォルダ選択エラー:", error);

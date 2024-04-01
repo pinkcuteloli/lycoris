@@ -1,31 +1,23 @@
-import { useState } from "react";
-import { invoke } from "@tauri-apps/api/tauri";
+import { useEffect, useState } from "react";
+import { Store } from "tauri-plugin-store-api";
 import Onboarding from "./routes/onboarding";
 
+const store = new Store(".settings.json");
+
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
-  const [name, setName] = useState("");
+  const [path, setPath] = useState<string>("");
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
+  useEffect(() => {
+    (async () => {
+      const path = await store.get("path");
+      setPath(path as string);
+    })();
+  });
+
+  if (path) {
+    return <div>Path: {path}</div>;
   }
-
-  return (
-    <Onboarding />
-  )
-
-  return (
-    <div>
-      <div className="text-2xl">
-        <nav>ダウンロード</nav>
-      </div>
-      <div>
-        <input />
-        <p>WARNING: セキュアなVPNに接続していない場合、IPアドレスを元にダウンロード履歴が追跡される可能性があります。十分に注意してください。</p>
-        </div>
-    </div>
-  );
+  return <Onboarding />;
 }
 
 export default App;
