@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
-import "./App.css";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -13,7 +12,7 @@ function App() {
 
   return (
     <div>
-      <div>
+      <div className="text-2xl">
         <nav>ダウンロード</nav>
       </div>
       <div>
