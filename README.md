@@ -1,4 +1,4 @@
-# pickbox
+# lycoris
 
 It is a local content management application specialized in collecting all kinds of Japanese works, including Pixiv illustrations, ASMRs, torrents, etc.
 
