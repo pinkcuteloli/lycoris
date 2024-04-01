@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { invoke } from "@tauri-apps/api/tauri";
+import Onboarding from "./routes/onboarding";
 
 function App() {
   const [greetMsg, setGreetMsg] = useState("");
@@ -9,6 +10,10 @@ function App() {
     // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
     setGreetMsg(await invoke("greet", { name }));
   }
+
+  return (
+    <Onboarding />
+  )
 
   return (
     <div>
